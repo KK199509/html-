@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>图片放大镜</title>
+  <style>
+		*{padding:0;margin:0;}
+		body{font-size:14px;font-family:'微软雅黑';}
+		ul li{list-style:none;}
+		a{text-decoration:none;}
+
+		#wraper{width:960px;margin:50px auto;padding:10px;overflow:hidden;border:2px solid #333;}
+		#wraper #imgbox{width:180px;height:180px;background:pink;position:relative;top:0;left:0;float:left;overflow:hidden;}
+		#wraper .cnt{margin-left:190px;}
+
+		#wraper #imgbox span{height:100px;width:100px;background:red;position:absolute;top:0;left:0;opacity:0.5;display:none;}
+		
+		#maximgbox{height:500px;width:500px;background:green;position:absolute;display:none;overflow:hidden;}
+		#maximg{position:absolute;display:block;}
+		#mark{height:100%;width:100%;position:absolute;left:0;top:0;background:transparent;}
+  </style>
+ </head>
+ <body>
+	<div id = 'wraper'>
+		<div id='imgbox'>
+			<img src='http://images.huxiu.com/article/cover/201601/05/081021633001.jpg' width='180' height='180'/>
+			<!--小阴影-->
+			<span></span>
+			<div id='mark'></div>
+		</div>
+		<div class='cnt'>
+			上至招保万金高管下至普通中介经纪人，都把玩转互联网当成神话一样的终极目标，经过数年的变革，远不止现在能看到的把传统房地产搬到互联网上，或者是简单的营销拓客等动作，从“去中介化”粗暴的切开房地产营销的第一个豁口开始，就注定了行业中的所有参与者都必须不断打破和适应新的规则。
+			笔者试图梳理2015年从年初到岁末的基于房地产行业互联网营销的变化，更加清晰的认识到未来上至招保万金高管下至普通中介经纪人，都把玩转互联网当成神话一样的终极目标，经过数年的变革，远不止现在能看到的把传统房地产搬到互联网上，或者是简单的营销拓客等动作，从“去中介化”粗暴的切开房地产营销的第一个豁口开始，就注定了行业中的所有参与者都必须不断打破和适应新的规则。
+			笔者试图梳理2015年从年初到岁末的基于房地产行业互联网营销的变化，更加清晰的认识到未来的行业上至招保万金高管下至普通中介经纪人，都把玩转互联网当成神话一样的终极目标，经过数年的变革，远不止现在能看到的把传统房地产搬到互联网上，或者是简单的营销拓客等动作，从“去中介化”粗暴的切开房地产营销的第一个豁口开始，就注定了行业中的所有参与者都必须不断打破和适应新的规则。
+			笔者试图梳理2015年从年初到岁末的基于房地产行业互联网营销的变化，更加清晰的认识到未来的行业的行业变革趋势。
+		</div>
+	</div>
+	<!--显示大图片-->
+	<div id='maximgbox'><img id='maximg'/></div>
+
+	<script type='text/javascript'>
+		function dom(id){
+				return document.getElementById(id);
+			}
+		window.onload = function(){
+			var imgboxDom = dom('imgbox');
+			var minimgDom = imgboxDom.children[0];
+			var spanDom = imgboxDom.getElementsByTagName('span')[0];
+			var maximgboxDom = dom('maximgbox');
+			var maximgDom = dom('maximg');
+			/*
+			imgboxDom.onmouseover = function(){
+				spanDom.style.display = 'block';
+			}
+			imgboxDom.onmouseout = function(){
+				spanDom.style.display = 'none';
+			}
+			*/
+			imgboxDom.onmouseenter = function(){
+				spanDom.style.display = 'block';
+				maximgboxDom.style.display = 'block';
+				//将小图的地址给大图
+				var minImg = minimgDom.src;
+				maximgDom.src = minImg;
+				//确定大图的位置
+				var top = this.parentElement.offsetTop + 10;
+				var left = this.parentElement.offsetLeft + this.offsetWidth + 20;
+                maximgboxDom.style.top = top +'px';
+				maximgboxDom.style.left = left +'px';
+			}
+			imgboxDom.onmouseleave = function(){
+				spanDom.style.display = 'none';
+				maximgboxDom.style.display = 'none';
+			}
+			imgboxDom.onmousemove = function(e){
+				var ev = e||window.event;
+				//获取鼠标坐标
+				var x = ev.clientX||ev.pageX;
+				var y = ev.clientY||ev.pageY;
+				//确定span的位置
+				var top = y - this.offsetTop - spanDom.offsetHeight/2;
+				var left = x - this.offsetLeft - spanDom.offsetWidth/2;
+				//最大移动距离
+				var maxtop = this.offsetHeight - spanDom.offsetHeight;
+				var maxleft = this.offsetWidth - spanDom.offsetWidth;
+				//边界判断
+				if(top<0)top=0;
+				if(top>maxtop)top=maxtop;
+				if(left<0)left=0;
+				if(left>maxleft)left=maxleft;
+				
+				spanDom.style.top = top +'px';
+				spanDom.style.left = left +'px';
+				//确定移动比例
+				var tbit = top/this.offsetHeight;
+				var lbit = left/this.offsetWidth;
+				//按比例确定大图位置
+				var mtop = (maximgDom.offsetHeight - maximgboxDom.offsetHeight)*tbit;
+				var mleft = (maximgDom.offsetWidth - maximgboxDom.offsetWidth)*lbit;
+
+				maximgDom.style.top = - mtop +'px';
+				maximgDom.style.left = - mleft +'px';
+
+			}
+		};
+	</script>
+ </body>
+</html>
+
